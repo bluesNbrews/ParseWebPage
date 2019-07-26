@@ -11,9 +11,7 @@ import (
 var exampleHTML = `
 <html>
 <body>
-  <h1>Hello!</h1>
-  <a href="/other-page">A link to another page</a>
-  <a href="/page-two">A link to a second page</a>
+  <a href="/dog-cat">dog cat <!-- commented text SHOULD NOT be included! --></a>
 </body>
 </html>
 `
