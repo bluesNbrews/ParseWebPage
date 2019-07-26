@@ -1,6 +1,7 @@
 package main
 
 import (
+
 	"fmt"
 	"strings"
 
@@ -18,10 +19,14 @@ var exampleHTML = `
 `
 
 func main() {
+	
 	r := strings.NewReader(exampleHTML)
+	
 	links, err := link.Parse(r)
+	
 	if err != nil {
 		panic(err)
 	}
+	
 	fmt.Printf("%+v\n", links)
 }
