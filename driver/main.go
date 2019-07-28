@@ -15,17 +15,16 @@ func main() {
 	//Call the URL string and retrieve HTML content as io.Reader
 	htmlcontent := web.Gethtml(enteredurl)
 
-	//Parse htmlcontent and return a slice of <a> tags found in it
+	//Parse htmlcontent and return an array of <a> tags found in it
 	links, err := link.Parse(htmlcontent)
 	if err != nil {
 		panic(err)
 	}
 
-	//Retrieve the HREFS from the slice, remove duplicates,
-	//append domain name where missing, then place in new slice
-	uniqueurls := link.Gethrefs(links, enteredurl)
+	//Read links array, add domain name to hrefs where missing, then place in new array
+	newlinks := link.Fixlinks(links, enteredurl)
 
-	//Query URLs from the new slice and display HTTP return code for each
-	web.Getandprinturlstatus(uniqueurls)
+	//Query HREF URLs from the new array and display text and HTTP return code for each
+	web.Getandprinturlstatus(newlinks)
 
 }

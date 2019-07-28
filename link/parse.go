@@ -88,8 +88,8 @@ func linkNodes(n *html.Node) []*html.Node {
 	return ret
 }
 
-//Gethrefs reads an array of Links, retrieves HREF URLs from it, removes duplicates, appends domain name where needed, then returns them as new slice
-func Gethrefs(links []Link, url string) []string {
+//Fixlinks reads an array of Links, appends domain name where needed, returns as new array
+func Fixlinks(links []Link, url string) []Link {
 
 	//Retrieve domain name from URL (to be used later for appending to URL paths)
 	zp := regexp.MustCompile(`/`)
@@ -97,24 +97,25 @@ func Gethrefs(links []Link, url string) []string {
 	var domainname = temp[0] + "//" + temp[2]
 
 	//Build array of hrefs
-	var urls []string
+	var newlinks []Link
 	for i := 0; i < len(links); i++ {
 		var path = links[i].Href
 		if strings.HasPrefix(path, "/") {
 			path = domainname + path
 		}
 
-		urls = append(urls, path)
+		var newlink Link
+		newlink.Href = path
+		newlink.Text = links[i].Text
+
+		newlinks = append(newlinks, newlink)
 	}
 
-	//Remove duplicate URLs from array
-	uniqueUrls := unique(urls)
-
-	return uniqueUrls
+	return newlinks
 }
 
 //Helper function to remove duplicates from an array of strings
-func unique(stringSlice []string) []string {
+/*func unique(stringSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range stringSlice {
@@ -124,4 +125,4 @@ func unique(stringSlice []string) []string {
 		}
 	}
 	return list
-}
+}*/
