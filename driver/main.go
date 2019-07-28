@@ -1,56 +1,30 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-	"io/ioutil"
-	"net/http"
 	"os"
-	"regexp"
-	"strings"
 
-	"github.com/bluesNbrews/ParseWebPage/link"
+	link "github.com/bluesNbrews/ParseWebPage/link"
+	web "github.com/bluesNbrews/ParseWebPage/web"
 )
-
-var exampleHTML = `
-<html>
-<body>
-  <a href="/dog-cat">dog cat <!-- commented text SHOULD NOT be included! --></a>
-</body>
-</html>
-`
 
 func main() {
 
-	//Retrieve URL to query
-	var fullpath = string(os.Args[1])
+	//Retrieve URL string from input
+	var enteredurl = string(os.Args[1])
 
-	//Retrieve domain name from URL (to be used later for appending to URL paths)
-	zp := regexp.MustCompile(`/`)
-	var temp = zp.Split(fullpath, -1)
-	var domainname = temp[0] + "//" + temp[2]
+	//Call the URL string and retrieve HTML content as io.Reader
+	htmlcontent := web.Gethtml(enteredurl)
 
-	//Make GET request to the entered URL and store HTML in variable r
-	resp, err := http.Get(fullpath)
-	if err != nil {
-		panic(err)
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	r := bytes.NewReader(body)
-
-	//Parse will take in an HTML document (r) and will return a slice of links parsed from it.
-	links, err := link.Parse(r)
+	//Parse htmlcontent and return a slice of <a> tags found in it
+	links, err := link.Parse(htmlcontent)
 	if err != nil {
 		panic(err)
 	}
 
-	for i := 0; i < len(links); i++ {
-		var path = links[i].Href
-		if strings.HasPrefix(path, "/") {
-			path = domainname + path
-		}
-		fmt.Println(path)
-	}
+	//Retrieve only the HREFS from the slice and place in new slice
+	uniqueurls := link.Gethrefs(links, enteredurl)
+
+	//Query URLs from the new slice and display HTTP return code for each
+	web.Getandprinturlstatus(uniqueurls)
 
 }
