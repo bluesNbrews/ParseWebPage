@@ -21,7 +21,8 @@ func main() {
 		panic(err)
 	}
 
-	//Retrieve only the HREFS from the slice and place in new slice
+	//Retrieve the HREFS from the slice, remove duplicates,
+	//append domain name where missing, then place in new slice
 	uniqueurls := link.Gethrefs(links, enteredurl)
 
 	//Query URLs from the new slice and display HTTP return code for each

@@ -32,6 +32,6 @@ func Getandprinturlstatus(uniqueurls []string) {
 			log.Fatal(err)
 		}
 
-		fmt.Println(i+1, "-", uniqueurls[i]+" "+strconv.Itoa(resp.StatusCode))
+		fmt.Printf("%-3s- %-60s| %-4s|\n", strconv.Itoa(i+1), uniqueurls[i], strconv.Itoa(resp.StatusCode))
 	}
 }
