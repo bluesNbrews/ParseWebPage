@@ -2,6 +2,7 @@ package link
 
 import (
 	"io"
+	"regexp"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -70,7 +71,6 @@ func text(n *html.Node) string {
 
 	return strings.Join(strings.Fields(ret), " ")
 
-	return ret
 }
 
 //Takes an HTML body and returns array of HTML elements containing the <a> tag
@@ -86,4 +86,42 @@ func linkNodes(n *html.Node) []*html.Node {
 		ret = append(ret, linkNodes(c)...)
 	}
 	return ret
+}
+
+//Gethrefs reads an array of Links, retrieves HREF URLs from it, removes duplicates, appends domain name where needed, then returns them as new slice
+func Gethrefs(links []Link, url string) []string {
+
+	//Retrieve domain name from URL (to be used later for appending to URL paths)
+	zp := regexp.MustCompile(`/`)
+	var temp = zp.Split(url, -1)
+	var domainname = temp[0] + "//" + temp[2]
+
+	//Build array of hrefs
+	var urls []string
+	for i := 0; i < len(links); i++ {
+		var path = links[i].Href
+		if strings.HasPrefix(path, "/") {
+			path = domainname + path
+		}
+
+		urls = append(urls, path)
+	}
+
+	//Remove duplicate URLs from array
+	uniqueUrls := unique(urls)
+
+	return uniqueUrls
+}
+
+//Helper function to remove duplicates from an array of strings
+func unique(stringSlice []string) []string {
+	keys := make(map[string]bool)
+	list := []string{}
+	for _, entry := range stringSlice {
+		if _, value := keys[entry]; !value {
+			keys[entry] = true
+			list = append(list, entry)
+		}
+	}
+	return list
 }
