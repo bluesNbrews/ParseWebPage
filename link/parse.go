@@ -10,9 +10,11 @@ import (
 
 //This represents an 'a' html tag with href (URL)
 type Link struct {
+	
 	Href string
 	Text string
 	Code int
+
 }
 
 //Parse will take in an HTML document and will return a slice of links parsed from it.
@@ -31,9 +33,10 @@ func Parse(r io.Reader) ([]Link, error) {
 
 	for _, node := range nodes {
 		links = append(links, buildLink(node))
-		//fmt.Println(node)
 	}
+	
 	return links, nil
+
 }
 
 //buildLink takes an html node and converts it to type link
@@ -48,12 +51,13 @@ func buildLink(n *html.Node) Link {
 			break
 		}
 
-		ret.Code = 0
 	}
 
-	//text takes an html node and returns the text in it
+	//Text function takes an html node and returns the text in it
 	ret.Text = text(n)
+
 	return ret
+
 }
 
 //text takes an html node and returns the text in it
@@ -68,7 +72,6 @@ func text(n *html.Node) string {
 	var ret string
 
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		//Byte buffer?
 		ret += text(c) + " "
 	}
 
@@ -116,16 +119,3 @@ func Fixlinks(links []Link, url string) []Link {
 
 	return newlinks
 }
-
-//Helper function to remove duplicates from an array of strings
-/*func unique(stringSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range stringSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}*/
