@@ -11,6 +11,9 @@ import (
 	"github.com/bluesNbrews/ParseWebPage/link"
 )
 
+var counter int = 0
+
+
 //Gethtml makes a GET call to a URL and returns the HTML body
 func Gethtml(enteredurl string) io.Reader {
 	
@@ -19,7 +22,6 @@ func Gethtml(enteredurl string) io.Reader {
 	if err != nil {
 		panic(err)
 	}
-
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -40,10 +42,10 @@ func GetUrlStatus(newlinks link.Link, c chan int) {
 		if err != nil {
 			log.Fatal(err)
 		}
+		defer resp.Body.Close()
 
 		c <- resp.StatusCode
 
-		defer resp.Body.Close()
 	} 
 }
 
@@ -53,5 +55,6 @@ func UpdateAndPrint(newlinks link.Link, c chan int){
 	newlinks.Code = <- c
 
 	//Print table rows
-	fmt.Printf("| %-80s | %-40s | %-5d|\n", newlinks.Href, newlinks.Text, newlinks.Code)
+	fmt.Printf("| %-3d | %-120s | %-60s | %-3d |\n", counter, newlinks.Href, newlinks.Text, newlinks.Code)
+	counter++
 }
