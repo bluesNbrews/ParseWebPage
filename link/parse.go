@@ -12,6 +12,7 @@ import (
 type Link struct {
 	Href string
 	Text string
+	Code int
 }
 
 //Parse will take in an HTML document and will return a slice of links parsed from it.
@@ -46,6 +47,8 @@ func buildLink(n *html.Node) Link {
 			ret.Href = attr.Val
 			break
 		}
+
+		ret.Code = 0
 	}
 
 	//text takes an html node and returns the text in it
