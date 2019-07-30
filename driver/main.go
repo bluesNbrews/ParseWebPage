@@ -37,9 +37,11 @@ func main() {
 	//Process each link concurrently to get http status code and assign to link and print
 	//The sleep is used temporarily to prevent too many http requests at one time
 	for i := 0; i < len(newlinks); i++ {
+		
 		go web.GetUrlStatus(newlinks[i], c)
 		go web.UpdateAndPrint(newlinks[i], c)
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(125 * time.Millisecond)
+		
 	}
 
 	//Looks for user input to keep program running while http requests are processing

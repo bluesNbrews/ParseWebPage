@@ -43,6 +43,7 @@ func GetUrlStatus(newlinks link.Link, c chan int) {
 
 		c <- resp.StatusCode
 
+		defer resp.Body.Close()
 	} 
 }
 
