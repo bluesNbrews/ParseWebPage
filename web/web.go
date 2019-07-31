@@ -13,7 +13,6 @@ import (
 
 var counter int = 0
 
-
 //Gethtml makes a GET call to a URL and returns the HTML body
 func Gethtml(enteredurl string) io.Reader {
 	
@@ -34,24 +33,29 @@ func Gethtml(enteredurl string) io.Reader {
 //Get http respone code for each link passed in. Use channel to pass back response code, 
 //which will be concurrently assigned and printed via UpdateAndPrint
 func GetUrlStatus(newlinks link.Link, c chan int) {
-
-	if newlinks.Href != ""{
 		
-		resp, err := http.Get(newlinks.Href)
-		
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer resp.Body.Close()
+	//Get the response or error from GET request. They are both mutually exclusive (returns one or the other) 
+	resp, err := http.Get(newlinks.Href)
 
-		c <- resp.StatusCode
+	//If there is an error, the error will be logged and the program will exit
+	//Lastly, the error will be displayed after the program closes
+	//There may be other functions to replace log.Fatal, but I had a hard time finding and implementing one
+	if err != nil {
+	
+		log.Fatal(err)
 
 	} 
+	defer resp.Body.Close()		
+
+	//Pass the status code via channel
+	c <- resp.StatusCode
+ 
 }
 
+//Update the status code for the new links
 func UpdateAndPrint(newlinks link.Link, c chan int){
 	
-	//Assign status code via channel
+	//Receive and assign status code via channel (waits for send)
 	newlinks.Code = <- c
 
 	//Print table rows

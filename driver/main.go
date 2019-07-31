@@ -34,10 +34,6 @@ func main() {
 	//Read links array, add domain name to hrefs where missing, then place in new array
 	newlinks := link.Fixlinks(links, enteredurl)
 
-	for i := 0; i < len(links); i++ {
-		fmt.Println(i, links[i])
-	}
-
 	//Process each link concurrently to get http status code and assign to link and print
 	//The sleep is used temporarily to prevent too many http requests at one time
 	for i := 0; i < len(newlinks); i++ {
