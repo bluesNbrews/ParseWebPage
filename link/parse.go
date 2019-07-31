@@ -83,7 +83,11 @@ func text(n *html.Node) string {
 func linkNodes(n *html.Node) []*html.Node {
 
 	if n.Type == html.ElementNode && n.Data == "a" {
-		return []*html.Node{n}
+		for _, attr := range n.Attr {
+			if attr.Key == "href" {
+				return []*html.Node{n}
+			}
+		}
 	}
 
 	var ret []*html.Node
