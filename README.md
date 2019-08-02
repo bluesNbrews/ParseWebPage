@@ -5,12 +5,6 @@
 
 > Parse any web page for URLs and return the HTTP response code of each one.
 
-## Install
-
-```sh
-npm install
-```
-
 ## Author
 
 👤 **Steven Williams & Fadi Dagher**
