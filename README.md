@@ -10,6 +10,7 @@
 👤 **Steven Williams & Fadi Dagher**
 
 * Github: [@bluesNbrews](https://github.com/bluesNbrews)
+* Twitter: [@wsm9671](https://twitter.com/wsm9671)
 
 ## Show your support
 
