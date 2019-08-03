@@ -10,11 +10,9 @@ import (
 
 //This represents an 'a' html tag with href (URL)
 type Link struct {
-	
 	Href string
 	Text string
 	Code int
-
 }
 
 //Parse will take in an HTML document and will return a slice of links parsed from it.
@@ -34,7 +32,7 @@ func Parse(r io.Reader) ([]Link, error) {
 	for _, node := range nodes {
 		links = append(links, buildLink(node))
 	}
-	
+
 	return links, nil
 
 }
@@ -106,12 +104,20 @@ func Fixlinks(links []Link, url string) []Link {
 	var temp = zp.Split(url, -1)
 	var domainname = temp[0] + "//" + temp[2]
 
-	//Build array of hrefs
+	//Fix broken URLs then create new array with the new values
 	var newlinks []Link
 	for i := 0; i < len(links); i++ {
 		var path = links[i].Href
 		if strings.HasPrefix(path, "/") {
 			path = domainname + path
+		}
+
+		if strings.HasPrefix(path, "#") {
+			path = domainname + path
+		}
+
+		if !strings.HasPrefix(path, "http") && path != "" {
+			path = domainname + "/" + path
 		}
 
 		var newlink Link
