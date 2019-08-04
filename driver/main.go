@@ -1,14 +1,12 @@
 package main
 
 import (
-
-	"os"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/bluesNbrews/ParseWebPage/link"
 	"github.com/bluesNbrews/ParseWebPage/web"
-
 )
 
 func main() {
@@ -16,11 +14,8 @@ func main() {
 	//Retrieve URL string from input
 	var enteredurl = string(os.Args[1])
 
-	//String it for input to keep program running
-	var input string
-	
 	//Channel for status code
-	var c chan int = make(chan int)
+	var c = make(chan int)
 
 	//Call the URL string and retrieve HTML content as io.Reader
 	htmlcontent := web.Gethtml(enteredurl)
@@ -34,16 +29,24 @@ func main() {
 	//Read links array, add domain name to hrefs where missing, then place in new array
 	newlinks := link.Fixlinks(links, enteredurl)
 
+	//Create hash table to count the occurance of the various HTTP return codes
+	var codestable map[string]int
+	codestable = make(map[string]int)
+
 	//Process each link concurrently to get http status code and assign to link and print
 	//The sleep is used temporarily to prevent too many http requests at one time
 	for i := 0; i < len(newlinks); i++ {
-		
+
 		go web.GetUrlStatus(newlinks[i], c)
-		go web.UpdateAndPrint(newlinks[i], c)
+		go web.UpdateAndPrint(newlinks[i], c, codestable)
 		time.Sleep(125 * time.Millisecond)
-		
+
 	}
 
-	//Looks for user input to keep program running while http requests are processing
-	fmt.Scanln(&input)
+	//Print the content of the HTTP return codes hash table
+	fmt.Println("")
+	for key, value := range codestable {
+		fmt.Println("Return code:", key, "Number of occurances:", value)
+	}
+
 }
