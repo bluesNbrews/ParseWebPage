@@ -12,8 +12,6 @@
 
 * Twitter: [@wsm9671](https://twitter.com/wsm9671)
 
-## Tutorial
-
 ## Recommended Environment / Setup
 
 MacOS or Linux with the following tree structure for Go files:
@@ -24,7 +22,17 @@ Please see the following webpage for more guidance on how to organize your code:
 
 https://golang.org/doc/code.html
 
+## Tutorial
+
+Use the following command (after navigating to the directory above in the Command Line): go run driver/main.go <website URL>
+
+![ParseWebPage](https://github.com/bluesNbrews/ParseWebPage/blob/master/img/tutorial.png)
+
 ## Workflow / Concurrency
+
+![ParseWebPage](https://github.com/bluesNbrews/ParseWebPage/blob/master/img/workflow.png)
+
+![ParseWebPage](https://github.com/bluesNbrews/ParseWebPage/blob/master/img/concurrency.png)
 
 ## Show your support
 
