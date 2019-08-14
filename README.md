@@ -12,7 +12,9 @@
 
 * Twitter: [@wsm9671](https://twitter.com/wsm9671)
 
-## Recommended Environment (to run as shown below)
+## Tutorial
+
+## Recommended Environment / Setup
 
 MacOS or Linux with the following tree structure for Go files:
 
@@ -22,9 +24,7 @@ Please see the following webpage for more guidance on how to organize your code:
 
 https://golang.org/doc/code.html
 
-## Setup
-
-## Tutorial
+## Workflow / Concurrency
 
 ## Show your support
 
