@@ -1,4 +1,4 @@
-![SkillSearchEngine](https://github.com/bluesNbrews/ParseWebPage/blob/master/img/readmeTitleImg.png)
+![ParseWebPage](https://github.com/bluesNbrews/ParseWebPage/blob/master/img/readmeTitleImg.png)
 
 # ParseWebPage - Fully Functional WebPage Parser
 
@@ -13,6 +13,14 @@
 * Twitter: [@wsm9671](https://twitter.com/wsm9671)
 
 ## Recommended Environment (to run as shown below)
+
+MacOS or Linux with the following tree structure for Go files:
+
+![ParseWebPage](https://github.com/bluesNbrews/ParseWebPage/blob/master/img/fileStructure.png)
+
+Please see the following webpage for more guidance on how to organize your code:
+
+https://golang.org/doc/code.html
 
 ## Setup
 
