@@ -26,7 +26,7 @@ https://golang.org/doc/code.html
 
 Use the following command (after navigating to the directory above in the Command Line): 
 
-go run driver/main.go <website URL>
+go run driver/main.go https://www.yourwebsiteurl.com
 
 ![ParseWebPage](https://github.com/bluesNbrews/ParseWebPage/blob/master/img/tutorial.png)
 
