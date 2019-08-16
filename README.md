@@ -14,7 +14,7 @@
 
 ## Recommended Environment / Setup
 
-MacOS or Linux with the following tree structure for Go files:
+Any OS with the following tree structure for Go files (screenshot below is on MacOS):
 
 ![ParseWebPage](https://github.com/bluesNbrews/ParseWebPage/blob/master/img/fileStructure.png)
 
